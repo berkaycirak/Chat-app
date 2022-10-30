@@ -22,6 +22,12 @@ io.on('connection', (socket) => {
 	});
 });
 
+app.get('/api', (req, res) => {
+	res.json({
+		message: 'Hello world',
+	});
+});
+
 server.listen(3001, () => {
 	console.log('Server is running on 3001');
 });
