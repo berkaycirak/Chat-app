@@ -7,17 +7,19 @@ import {
 	Route,
 	Link,
 } from 'react-router-dom';
+import { useRef } from 'react';
 const socket = io.connect('http://localhost:3001');
 
 function App() {
+	const userRef = useRef();
 	const router = createBrowserRouter([
 		{
 			path: '/',
-			element: <Home socket={socket} />,
+			element: <Home socket={socket} username={userRef} />,
 		},
 		{
 			path: '/chat',
-			element: <Chat socket={socket} />,
+			element: <Chat socket={socket} username={userRef} />,
 		},
 	]);
 	return <RouterProvider router={router} />;

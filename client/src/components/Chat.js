@@ -1,39 +1,61 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Chat({ socket }) {
-	const [message, setMessage] = useState();
+function Chat({ socket, username }) {
+	console.log(username.current.value);
+	const [message, setMessage] = useState('');
+	const [messages, setMessages] = useState([]);
 	const navigate = useNavigate();
 
-	const handleClick = () => {
-		localStorage.removeItem('username');
+	const handleExit = () => {
 		navigate('/');
 		window.location.reload();
 	};
 
 	const handleSendMessage = (e) => {
 		e.preventDefault();
-		if (localStorage.getItem('username')) {
+		if (username) {
 			socket.emit('message', {
-				name: socket.id,
+				name: username,
+				message: message,
+				socketID: socket.id,
 			});
 		}
 
 		setMessage('');
 	};
 
-	console.log(message);
+	useEffect(() => {
+		socket.on('messageResponse', (data) =>
+			setMessages([...messages, data])
+		);
+	}, [socket, messages]);
+
 	return (
 		<div className='flex flex-col items-center justify-center h-[100vh] bg-red-300 p-12'>
 			<div className='self-end mr-16 mb-10'>
 				<button
 					className='border p-2 rounded-md bg-black text-white transition hover:bg-red-500'
-					onClick={handleClick}>
+					onClick={handleExit}>
 					Exit
 				</button>
 			</div>
-			<div className='border-2 w-[50%] h-[50%] bg-gray-100 rounded-md '>
-				<div className=' text-2xl p-2'>Chat</div>
+			<div className='border-2 w-[50%] h-[50%] bg-gray-100 overflow-y-scroll rounded-md '>
+				<div className=' text-2xl p-2'>
+					{messages.map((item) =>
+						item.name === username ? (
+							<div className='bg-red-200'>
+								<h1>You</h1>
+								<p>{item.message}</p>
+							</div>
+						) : (
+							<div className='bg-green-200'>
+								<h1>{item.name}</h1>
+								<p>{item.message}</p>
+							</div>
+						)
+					)}
+				</div>
 			</div>
 			<div className='w-[50%]'>
 				<textarea
