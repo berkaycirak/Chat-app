@@ -1,12 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 
-function Home({ socket, username }) {
+function Home({ socket, setUsername }) {
 	const navigate = useNavigate();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		localStorage.setItem('username', username.current.value);
 		navigate('/chat');
 	};
 
@@ -25,7 +24,7 @@ function Home({ socket, username }) {
 						className='border mx-4 rounded-md p-2 focus:outline-none'
 						placeholder='Enter your username'
 						autoComplete='off'
-						ref={username}
+						onChange={(e) => setUsername(e.target.value)}
 					/>
 					<button
 						className='border-2 font-bold border-black px-2 rounded-lg transition hover:bg-black hover:text-white hover:border-white '

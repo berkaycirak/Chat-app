@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Chat({ socket, username }) {
-	console.log(username.current.value);
 	const [message, setMessage] = useState('');
 	const [messages, setMessages] = useState([]);
 	const navigate = useNavigate();
@@ -14,13 +13,12 @@ function Chat({ socket, username }) {
 
 	const handleSendMessage = (e) => {
 		e.preventDefault();
-		if (username) {
-			socket.emit('message', {
-				name: username,
-				message: message,
-				socketID: socket.id,
-			});
-		}
+
+		socket.emit('message', {
+			name: username,
+			message: message,
+			socketID: socket.id,
+		});
 
 		setMessage('');
 	};

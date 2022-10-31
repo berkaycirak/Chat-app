@@ -7,19 +7,31 @@ import {
 	Route,
 	Link,
 } from 'react-router-dom';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 const socket = io.connect('http://localhost:3001');
 
 function App() {
-	const userRef = useRef();
+	const [username, setUsername] = useState();
 	const router = createBrowserRouter([
 		{
 			path: '/',
-			element: <Home socket={socket} username={userRef} />,
+			element: (
+				<Home
+					socket={socket}
+					username={username}
+					setUsername={setUsername}
+				/>
+			),
 		},
 		{
 			path: '/chat',
-			element: <Chat socket={socket} username={userRef} />,
+			element: (
+				<Chat
+					socket={socket}
+					username={username}
+					setUsername={setUsername}
+				/>
+			),
 		},
 	]);
 	return <RouterProvider router={router} />;
