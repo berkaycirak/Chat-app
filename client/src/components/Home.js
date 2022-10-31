@@ -18,17 +18,18 @@ function Home({ socket }) {
 					Sign in to Open Chat
 				</h2>
 				<div className='flex items-center justify-center py-4'>
-					<label htmlFor='username'>Username</label>
 					<input
 						type='text'
 						minLength={6}
 						name='username'
 						id='username'
-						className='border mx-4 rounded-md p-2'
+						className='border mx-4 rounded-md p-2 focus:outline-none'
+						placeholder='Enter your username'
+						autoComplete='off'
 						ref={userRef}
 					/>
 					<button
-						className='border-2 border-black px-2 rounded-lg'
+						className='border-2 font-bold border-black px-2 rounded-lg transition hover:bg-black hover:text-white hover:border-white '
 						type='submit'>
 						SIGN IN
 					</button>
