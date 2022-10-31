@@ -20,6 +20,10 @@ io.on('connection', (socket) => {
 	socket.on('disconnect', () => {
 		console.log('🔥: A user disconnected');
 	});
+
+	socket.on('message', (data) => {
+		console.log(data);
+	});
 });
 
 app.get('/api', (req, res) => {
