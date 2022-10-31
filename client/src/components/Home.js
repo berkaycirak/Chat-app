@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
 
-function Home({ socket, setUsername }) {
+function Home({ socket, setUsername, username }) {
 	const navigate = useNavigate();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		socket.emit('newUser', { username, socketID: socket.id });
 		navigate('/chat');
 	};
 

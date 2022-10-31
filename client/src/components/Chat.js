@@ -33,7 +33,7 @@ function Chat({ socket, username }) {
 	return (
 		<div className=' flex items-center justify-center h-[100vh] bg-red-300 p-12'>
 			<div>
-				<ActiveUsers />
+				<ActiveUsers socket={socket} />
 			</div>
 			<div className='flex flex-col min-w-[1100px] '>
 				<div className='self-end  mb-10'>
