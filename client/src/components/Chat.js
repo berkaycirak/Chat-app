@@ -42,13 +42,13 @@ function Chat({ socket, username }) {
 				<div className=' text-2xl p-2'>
 					{messages.map((item) =>
 						item.name === username ? (
-							<div className='bg-red-200'>
-								<h1>You</h1>
+							<div className='bg-red-200 border rounded-md m-2 p-4'>
+								<h1 className='text-green-500'>You</h1>
 								<p>{item.message}</p>
 							</div>
 						) : (
-							<div className='bg-green-200'>
-								<h1>{item.name}</h1>
+							<div className='bg-green-200 p-4 rounded-md'>
+								<h1 className='text-gray-500'>{item.name}</h1>
 								<p>{item.message}</p>
 							</div>
 						)
