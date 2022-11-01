@@ -13,20 +13,22 @@ function Chat({ socket, username }) {
 		navigate('/');
 		window.location.reload();
 	};
-
+	console.log(message);
 	const handleTyping = () => {
 		if (message !== '') {
 			socket.emit('typing', `${username} is typing...`);
+		} else {
+			socket.emit('notyping', '');
 		}
 	};
 	const handleSendMessage = (e) => {
 		e.preventDefault();
-
 		socket.emit('message', {
 			name: username,
 			message: message,
 			socketID: socket.id,
 		});
+		socket.emit('notyping', '');
 
 		setMessage('');
 	};
@@ -92,7 +94,11 @@ function Chat({ socket, username }) {
 					/>
 					<button
 						className='border-2 rounded-md p-2'
-						onClick={handleSendMessage}>
+						onClick={(e) => {
+							if (message.trim()) {
+								handleSendMessage(e);
+							}
+						}}>
 						Send
 					</button>
 				</div>
