@@ -1,13 +1,8 @@
-/**
- * @jest-environment jsdom
- */
-
 import { setImmediate } from 'timers';
 import { render, screen, fireEvent } from '@testing-library/react';
 import App from '../App';
-import { BrowserRouter } from 'react-router-dom';
+
 import clientIO from 'socket.io-client';
-import { hasUncaughtExceptionCaptureCallback } from 'process';
 
 const express = require('express');
 const app = express();
@@ -28,11 +23,11 @@ const io = new Server(server, {
 });
 const socket = clientIO.connect('http://localhost:3001');
 
-describe('home page input', () => {
-	it('home page input has at least 6 char', async () => {
+describe('App rendering', () => {
+	it('home page input should have at least 6 char', () => {
 		render(<App />);
 		const inputElement = screen.getByTestId('input');
-		fireEvent.change(inputElement, { target: { value: 'Berkay' } });
+		fireEvent.change(inputElement, { target: { value: 'Berka' } });
 		const btn = screen.getByRole('button');
 		expect(btn).toBeDisabled();
 	});
