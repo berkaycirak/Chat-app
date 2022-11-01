@@ -94,6 +94,7 @@ function Chat({ socket, username }) {
 					/>
 					<button
 						className='border-2 rounded-md p-2'
+						data-testid='sendBtn'
 						onClick={(e) => {
 							if (message.trim()) {
 								handleSendMessage(e);

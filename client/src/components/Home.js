@@ -1,7 +1,13 @@
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Home({ socket, setUsername, username }) {
 	const navigate = useNavigate();
+	const isDisabled = useMemo(() => {
+		if (username?.length >= 6) return false;
+		else return true;
+	}, [username]);
+	console.log(isDisabled);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -21,14 +27,17 @@ function Home({ socket, setUsername, username }) {
 						minLength={6}
 						name='username'
 						id='username'
+						data-testid='input'
 						className='border mx-4 rounded-md p-2 focus:outline-none'
 						placeholder='Enter your username'
 						autoComplete='off'
 						onChange={(e) => setUsername(e.target.value)}
 					/>
+
 					<button
-						className='border-2 font-bold border-black px-2 rounded-lg transition hover:bg-black hover:text-white hover:border-white '
-						type='submit'>
+						className='border-2 font-bold border-black/70 bg-green-500 px-2 rounded-lg transition hover:bg-black hover:text-white hover:border-white disabled:border-gray-500 disabled:bg-gray-400 disabled:text-gray-300  disabled:pointer-events-none   '
+						type='submit'
+						disabled={isDisabled}>
 						SIGN IN
 					</button>
 				</div>
