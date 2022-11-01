@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ActiveUsers from './ActiveUsers';
+import { useScrollTo } from '../hooks/useScrollTo';
 
 function Chat({ socket, username }) {
 	const [message, setMessage] = useState('');
@@ -33,6 +34,8 @@ function Chat({ socket, username }) {
 		setMessage('');
 	};
 
+	useScrollTo(lastMessageRef, messages);
+
 	useEffect(() => {
 		socket.on('messageResponse', (data) =>
 			setMessages([...messages, data])
@@ -44,14 +47,9 @@ function Chat({ socket, username }) {
 		socket.on('typingResponse', (data) => setTypingStatus(data));
 	}, [socket]);
 
-	// for auto-scroll
-	useEffect(() => {
-		lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
-	}, [messages]);
-
 	return (
 		<div className=' flex items-center justify-center h-[100vh] bg-red-300 p-12'>
-			<div>
+			<div data-testid='active'>
 				<ActiveUsers socket={socket} />
 			</div>
 			<div className='flex flex-col min-w-[1100px] '>

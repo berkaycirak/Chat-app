@@ -9,7 +9,9 @@ function ActiveUsers({ socket }) {
 	}, [socket]);
 
 	return (
-		<div className='h-full bg-gray-100 p-4 rounded-md'>
+		<div
+			className='h-full bg-gray-100 p-4 rounded-md'
+			data-testid='active_users'>
 			<div>
 				<h1>Active Users</h1>
 				<div>
